@@ -1,0 +1,16 @@
+<h1>ペットをつくる</h1>
+<p>カルーセルはいる</p>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>名前</mat-label>
+    <input formControlName="name" placeholder="テスト太郎" type="text" matInput required autocomplete="off">
+    <mat-error *ngIf="nameControl.hasError('required')">必須入力です</mat-error>
+    <mat-error *ngIf="nameControl.hasError('maxLength')">長すぎます</mat-error>
+  </mat-form-field>
+  <mat-radio-group formControlName="gender">
+    <mat-radio-button value="male">♂(オス)</mat-radio-button>
+    <mat-radio-button value="female">♀(メス)</mat-radio-button>
+  </mat-radio-group>
+
+  <button [disabled]="form.invalid" mat-raised-button color="primary">つくる</button>
+</form>
