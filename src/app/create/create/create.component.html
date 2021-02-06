@@ -1,22 +1,30 @@
 <h1>ペットをつくる</h1>
-<div>
-<swiper [config]="config" [(index)]="selectedPetId">
-  <div *ngFor="let petId of petIds" class="swiper-slide">
-    <img src="/assets/images/pet-{{petId}}.png" alt="">
-  </div>
-</swiper>
+<div class="swiper">
+  <swiper [config]="config" [(index)]="selectedPetId">
+    <div *ngFor="let petId of petIds" class="swiper-slide">
+      <img src="/assets/images/pet-{{petId}}.png" alt="">
+    </div>
+  </swiper>
+  <div class="pager"></div>
 </div>
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <mat-form-field>
-    <mat-label>名前</mat-label>
-    <input formControlName="name" placeholder="テスト太郎" type="text" matInput required autocomplete="off">
-    <mat-error *ngIf="nameControl.hasError('required')">必須入力です</mat-error>
-    <mat-error *ngIf="nameControl.hasError('maxLength')">長すぎます</mat-error>
-  </mat-form-field>
-  <mat-radio-group formControlName="gender">
-    <mat-radio-button value="male">♂(オス)</mat-radio-button>
-    <mat-radio-button value="female">♀(メス)</mat-radio-button>
-  </mat-radio-group>
 
-  <button [disabled]="form.invalid" mat-raised-button color="primary">つくる</button>
-</form>
+<div class="container">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-form-field class="name-input" appearance="outline">
+      <mat-label>名前</mat-label>
+      <input formControlName="name" placeholder="テスト太郎" type="text" matInput required autocomplete="off">
+      <mat-error *ngIf="nameControl.hasError('required')">必須入力です</mat-error>
+      <mat-error *ngIf="nameControl.hasError('maxLength')">長すぎます</mat-error>
+    </mat-form-field>
+
+    <p>性別</p>
+    <mat-radio-group formControlName="gender" class="radio-group">
+      <mat-radio-button class="radio-group__item"value="male">♂(オス)</mat-radio-button>
+      <mat-radio-button class="radio-group__item"value="female">♀(メス)</mat-radio-button>
+    </mat-radio-group>
+
+    <div class="form-footer">
+      <button [disabled]="form.invalid" mat-raised-button color="primary">つくる</button>
+    </div>
+  </form>
+</div>
