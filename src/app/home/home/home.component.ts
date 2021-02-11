@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Pet } from 'src/app/interface/pet';
+import { AuthService } from 'src/app/service/auth.service';
+import { PetService } from 'src/app/services/pet.service';
 
 @Component({
   selector: 'app-home',
@@ -8,15 +11,12 @@ import { Pet } from 'src/app/interface/pet';
 })
 export class HomeComponent implements OnInit {
 
-  pet: Pet = {
-    name: 'テストペット',
-    exp: 200,
-    level: 4,
-    avaterURL: '/assets/images/pet-1.png'
-    
-  }
+  pet$:Observable<Pet> = this.petService.getPet(this.authService.uid);
 
-  constructor() { }
+  constructor(
+    private petService: PetService,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
   }

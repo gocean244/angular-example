@@ -11,21 +11,23 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   afUser$: Observable<firebase.User> = this.afAuth.user;
+  uid: string;
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
     private snackBar: MatSnackBar,
   ) { 
-    this.afUser$.subscribe(user => console.log(user));
+    this.afUser$.subscribe(user => {
+      console.log(user);
+      this.uid = user && user.uid;
+    });
   }
 
   login() {
     this.afAuth.signInWithPopup(new firebase.auth.GithubAuthProvider())
     .then(result => {
-      this.snackBar.open(`${result.user.displayName}様Gitpetへようこそ`, null, {
-        duration: 2000,
-      });
+      this.snackBar.open(`${result.user.providerData[0].displayName}様Gitpetへようこそ`, null)
      })
     .catch(e => console.log(e))
   }
@@ -33,11 +35,9 @@ export class AuthService {
   logout() {
     this.afAuth.signOut()
     .then(() => {
-      this.snackBar.open('ログアウトしました', 'OK', {
-        duration: 2000,
-      });
+      this.snackBar.open('ログアウトしました', 'OK')
+      this.router.navigateByUrl('/welcome');
     })
     .catch(e => console.log(e))
-    this.router.navigateByUrl('/welcome');
   }
 }
