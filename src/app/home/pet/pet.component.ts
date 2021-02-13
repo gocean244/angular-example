@@ -9,7 +9,6 @@ import { Pet } from 'src/app/interface/pet';
 export class PetComponent implements OnInit {
 
   @Input() pet: Pet;
-  maxExp: number = 400;
 
   constructor() { }
 
