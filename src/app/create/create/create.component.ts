@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { map } from 'rxjs/operators';
+import { Pet } from 'src/app/interface/pet';
 import { AuthService } from 'src/app/service/auth.service';
 import { PetService } from 'src/app/services/pet.service';
 
@@ -54,6 +56,10 @@ export class CreateComponent implements OnInit {
   submit() {
     console.log(this.form.value);
     console.log(this.selectedPetId);
+    // const pet: Pet = this.petService.getPet(this.authService.uid).subscribe({
+    //   next(pet => pet)
+    // })
+
     const formData = this.form.value;
     this.petService.createPet({
       petImageId: this.selectedPetId + 1,
@@ -62,6 +68,7 @@ export class CreateComponent implements OnInit {
       exp: 0,
       trainerId: this.authService.uid,
       gender: formData.gender,
+      ownerGitHubId: null,
     });
   }
 
